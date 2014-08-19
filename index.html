@@ -30,6 +30,8 @@
 			            } else {
 			                $scope.result 	= data.result;
 			                $scope.nome 	= data.nome;
+
+			                $scope.manifestante = {};
 			            }
 			        });
 				};
@@ -55,8 +57,8 @@
 			
 		</script>
 	</head>
-	<body ng-app="frmOuvidoria" ng-controller="frmOuvidoriaController">
-		<div id="box-frm">
+	<body>
+		<div id="box-frm" ng-app="frmOuvidoria" ng-controller="frmOuvidoriaController">
 			<div class="pull-right">
 				<a href="" id="btn-minimizar">
 					<span class="glyphicon glyphicon-chevron-down"></span>
