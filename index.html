@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Ouvidoria</title>
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./arquivos/style.css">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+
+		<script>
+			var frmOuvidoria = angular.module('frmOuvidoria', []);
+
+			function frmOuvidoriaController($scope, $http) {
+				$scope.manifestante = {};
+
+				$scope.sendFrm = function() {
+					$http({
+				        method  : 'POST',
+				        url     : './arquivos/send.php',
+				        data    : $.param($scope.manifestante),
+				        headers : { 'Content-Type': 'application/x-www-form-urlencoded' } 
+				    })
+			        .success(function(data) {
+			            console.log(data);
+
+			            if (!data.success) {
+			                $scope.erroMsgNome		= data.erromsg.nome;
+			                $scope.erroMsgEmail 	= data.erromsg.email;
+			                $scope.erroMsgMensagem	= data.erromsg.mensagem;
+			            } else {
+			                $scope.result 	= data.result;
+			                $scope.nome 	= data.nome;
+			            }
+			        });
+				};
+			}
+		</script>
+	</head>
+	<body ng-app="frmOuvidoria" ng-controller="frmOuvidoriaController">
+		<div id="box-frm">
+			<h2 class="text-center">Ouvidoria</h2>
+
+			<div id="results" class="well text-center" ng-show="result">{{ result }} <strong>{{nome}}</strong>.</div>
+
+			<form ng-submit="sendFrm()">
+				<div class="form-group" ng-class="{ 'has-error' : erroMsgNome }">
+					<label>Nome</label>
+					<input type="text" name="nome" class="form-control" ng-model="manifestante.nome">
+					<span class="help-block" ng-show="erroMsgNome">{{ erroMsgNome }}</span>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : erroMsgEmail }">
+					<label>Email</label>
+					<input type="text" name="email" class="form-control" ng-model="manifestante.email">
+					<span class="help-block" ng-show="erroMsgEmail">{{ erroMsgEmail }}</span>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error' : erroMsgMensagem }">
+					<label>Mensagem</label>
+					<textarea name="mensagem" class="form-control" ng-model="manifestante.mensagem"></textarea>
+					<span class="help-block" ng-show="erroMsgMensagem">{{ erroMsgMensagem }}</span>
+				</div>
+
+				<button type="submit" class="btn btn-primary btn-block">
+					Enviar!
+				</button>
+			</form>
+		</div>
+	</body>
+</html>

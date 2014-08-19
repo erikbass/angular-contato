@@ -1,0 +1,10 @@
+#box-frm{
+	border: 1px solid #ccc;
+    border-radius: 10px 0 0;
+    bottom: -1px;
+    box-shadow: 0 0 10px #787878;
+    padding: 0 15px 10px;
+    position: fixed;
+    right: 0;
+    width: 300px;
+}
