@@ -34,15 +34,39 @@
 			        });
 				};
 			}
+
+			$(function(){
+				$('#btn-minimizar').click(function(){
+					var frm = $("#frmOuvidoria");
+
+					if( $(frm).is(':visible') ) {
+						$(frm).slideUp();
+						$("#btn-minimizar span").addClass("glyphicon-chevron-up")
+						$("#btn-minimizar span").removeClass("glyphicon-chevron-down");
+					} else {
+						$(frm).slideDown();
+						$("#btn-minimizar span").addClass("glyphicon-chevron-down")
+						$("#btn-minimizar span").removeClass("glyphicon-chevron-up");
+					}
+					return false;
+				});
+			});
+
+			
 		</script>
 	</head>
 	<body ng-app="frmOuvidoria" ng-controller="frmOuvidoriaController">
 		<div id="box-frm">
+			<div class="pull-right">
+				<a href="" id="btn-minimizar">
+					<span class="glyphicon glyphicon-chevron-down"></span>
+				</a>
+			</div>
 			<h2 class="text-center">Ouvidoria</h2>
 
 			<div id="results" class="well text-center" ng-show="result">{{ result }} <strong>{{nome}}</strong>.</div>
 
-			<form ng-submit="sendFrm()">
+			<form id="frmOuvidoria" ng-submit="sendFrm()">
 				<div class="form-group" ng-class="{ 'has-error' : erroMsgNome }">
 					<label>Nome</label>
 					<input type="text" name="nome" class="form-control" ng-model="manifestante.nome">
